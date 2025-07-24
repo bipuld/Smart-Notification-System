@@ -1,0 +1,37 @@
+version: '3.9'  # Use the latest stable Compose file version
+
+services:
+  web:
+    build: .  # Build the Docker image using the Dockerfile in the current directory
+    volumes:
+      - .:/code  # Mount the current directory into /code inside the container for live code editing
+      - static_volume:/code/staticfiles  # Persistent volume for collected static files
+    env_file:
+      - .env  # Load environment variables (DB credentials, secret keys, etc.) from .env file
+    ports:
+      - "8000:8000"  # Expose container's port 8000 on localhost port 8000 for browser access
+    environment:
+      - DEBUG=True  # Enable Django debug mode for development (disable in production!)
+    command: >
+      sh -c "
+        python manage.py migrate &&  # Apply database migrations before starting server
+        python manage.py collectstatic --noinput &&  # Collect static files into staticfiles directory
+        python manage.py runserver 0.0.0.0:8000     # Run Django dev server, listen on all interfaces
+      "
+    depends_on:
+      - db  # Ensure the db service is started before web
+
+  db:
+    image: postgres:15-alpine  # Lightweight PostgreSQL 15 image
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist DB data between container restarts
+    environment:
+      POSTGRES_DB: ${DB_NAME}       # Database name (from .env)
+      POSTGRES_USER: ${DB_USER}     # DB username (from .env)
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # DB password (from .env)
+    ports:
+      - "5432:5432"  # Expose Postgres default port for local tools if needed
+
+volumes:
+  postgres_data:  # Persistent volume for DB data
+  static_volume:  # Persistent volume for collected static files
