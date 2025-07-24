@@ -194,23 +194,53 @@ curl -X POST http://localhost:8000/api/v1/notification/notification/trigger/ \
 ```
 This event simulate when user is login and this simulates the notification delivery to user of id 1 with type as mention in perfernces delivery status and only simulate by admin as they are authorize to perform this action
 
-
+```bash
+curl -X POST http://localhost:8000/api/v1/notification/notification/trigger/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "event": "new_comment",
+  "data": {
+    "comment": "This is sample comment text.",
+    "post_id": "123",              
+    "author": "UserA",             
+    "messages": "Hi.. Mataes"      
+  }
 
 
 ```
+This event simulate new_comment notification type  and this simulates the notification delivery to alll user of with type who are as mention in perfernces variety of channels and this new_comments type delivery status and only simulate by admin as they are authorize to perform this action
 
-
+```bash
+curl -X POST http://localhost:8000/api/v1/notification/notification/trigger/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "event": "weekly_summary",
+  "data": {
+    "week_start": "2025-07-01",
+    "week_end": "2025-07-07",
+    "new_comments": 5,
+    "new_logins": 2,
+    "summary": "You have 5 new comments and 2 logins this week."
+  }
 ```
+This event simulate weekly summary notification type  and this simulates the notification delivery to alll user of with type as mention in perfernces delivery status as weekly_summary with diffrent channels and only simulate by admin as they are authorize to perform this action
+
+
+
+
+
 
 #### 4. Get Notification History
 
 ```bash
-# Get user's notification history
-curl -X GET http://localhost:8000/api/v1/notification/notification/history/ \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 
+curl -X GET http://localhost:8000/api/v1/notification/history/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+fetch with diffrent filter in query as provided
 # Get unread notifications
-curl -X GET http://localhost:8000/api/v1/notification/notification/unread/ \
+curl -X GET http://localhost:8000/api/v1/notification/unread/ \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -218,7 +248,7 @@ curl -X GET http://localhost:8000/api/v1/notification/notification/unread/ \
 
 ```bash
 # Mark specific notification as read
-curl -X POST http://localhost:8000/api/v1/notification/notification/read/ \
+curl -X POST http://localhost:8000/api/v1/notification/read/ \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

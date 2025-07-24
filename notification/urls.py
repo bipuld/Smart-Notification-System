@@ -25,11 +25,7 @@ urlpatterns = router.urls + [
                     NotificationHistoryView.as_view(),
                     name="notification-delivery",
                 ),
-                path(
-                    "history/",
-                    NotificationHistoryView.as_view(),
-                    name="notification-history",
-                ),
+
                 path("read/", NotificationReadView.as_view(), name="notification-read"),
                 path(
                     "unread/",
@@ -44,4 +40,9 @@ urlpatterns = router.urls + [
         NotificationTriggerView.as_view(),
         name="notification-trigger",
     ), 
+    path(
+        "history/",
+        NotificationHistoryView.as_view(),
+        name="notification-history",
+    ),
 ]
