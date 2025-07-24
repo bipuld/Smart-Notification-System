@@ -1,13 +1,27 @@
-FROM python:3.12-slim-bullseye
+FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /code
+WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY . .
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
-CMD ["gunicorn", "NotifyHub.wsgi:application", "--bind", "0.0.0.0:8000"]
+COPY . /app/
+
+RUN mkdir -p /app/staticfiles
+RUN python manage.py collectstatic --noinput
+RUN python manage.py migrate
+
+EXPOSE $PORT
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "NotifyHub.wsgi:application"]
