@@ -9,29 +9,27 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     re_path(r"api/(?P<version>(v1))/", include("user.urls")),
     re_path(r"api/(?P<version>(v1))/notification/", include("notification.urls")),
-]
-
-if settings.DEBUG:
-    urlpatterns += [
-        path(
-            "api/",
-            include(
-                [
-                    path("", SpectacularAPIView.as_view(), name="schema"),
-                    path(
-                        "swagger/",
-                        SpectacularSwaggerView.as_view(url_name="schema"),
-                        name="swagger-ui",
-                    ),
-                    path(
-                        "redoc/",
-                        SpectacularRedocView.as_view(url_name="schema"),
-                        name="redoc",
-                    ),
-                ]
-            ),
+    path(
+        "api/",
+        include(
+            [
+                path("", SpectacularAPIView.as_view(), name="schema"),
+                path(
+                    "swagger/",
+                    SpectacularSwaggerView.as_view(url_name="schema"),
+                    name="swagger-ui",
+                ),
+                path(
+                    "redoc/",
+                    SpectacularRedocView.as_view(url_name="schema"),
+                    name="redoc",
+                ),
+            ]
         ),
+    ),
+]
+if settings.DEBUG:
         path("ckeditor5/", include("django_ckeditor_5.urls")),
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-    ]
+    
