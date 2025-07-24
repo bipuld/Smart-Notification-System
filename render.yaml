@@ -47,5 +47,3 @@ envVarGroups:
         value: 1
       - key: DJANGO_SETTINGS_MODULE
         value: NotifyHub.settings
-      - key: PORT
-        value: 8000
