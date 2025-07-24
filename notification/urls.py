@@ -26,12 +26,7 @@ urlpatterns = router.urls + [
                     name="notification-delivery",
                 ),
 
-                path("read/", NotificationReadView.as_view(), name="notification-read"),
-                path(
-                    "unread/",
-                    NotificationUnReadListView.as_view(),
-                    name="notification-unread",
-                )
+              
             ]
         ),
     ),
@@ -45,4 +40,10 @@ urlpatterns = router.urls + [
         NotificationHistoryView.as_view(),
         name="notification-history",
     ),
+    path("read/", NotificationReadView.as_view(), name="notification-read"),
+    path(
+        "unread/",
+        NotificationUnReadListView.as_view(),
+        name="notification-unread",
+    )
 ]
