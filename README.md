@@ -255,6 +255,21 @@ curl -X POST http://localhost:8000/api/v1/notification/read/ \
     "notification_delivery_id": "delivery-uuid"
   }'
 ```
+#### 6. List of Delivery Notification 
+
+```bash
+# Mark Deleivery Notification 
+curl -X POST http://localhost:8000/api/v1/notification/notification-delivery/ 
+```
+
+#### 7. List of  Notification Type in the System
+
+```bash
+# give all intial notification type
+curl -X POST http://localhost:8000/api/v1/notification/notifications-type/
+
+
+```
 
 ### Postman Collection
 
@@ -264,128 +279,25 @@ Import the OpenAPI schema into Postman:
 3. Enter URL: `http://localhost:8000/api/`
 4. Configure authentication with your JWT token
 
-## 📊 API Response Examples
-
-### Successful Notification Trigger Response
-```json
-{
-  "message": "Notification sent successfully",
-  "notification_id": "uuid-here",
-  "delivery_count": 2,
-  "failed_deliveries": []
-}
-```
-
-### Notification History Response
-```json
-{
-  "count": 10,
-  "next": null,
-  "previous": null,
-  "results": [
-    {
-      "id": "delivery-uuid",
-      "notification": {
-        "id": "notification-uuid",
-        "title": "Welcome Message",
-        "content": "Welcome to our platform!",
-        "notification_type": {
-          "notification_code": "welcome_message",
-          "name": "Welcome Message"
-        }
-      },
-      "channel": "email",
-      "status": "sent",
-      "sent_at": "2025-07-24T10:30:00Z",
-      "read_at": null,
-      "error_message": null
-    }
-  ]
-}
-```
 
 ## 🔧 Configuration
 
 ### Notification Types Setup
 
-Create notification types via Django admin or API:
+Create notification types via Django admin or default migrations three type is define as : new_login,weekly_summary,new_comment:
 
-```python
-# Example notification types
-NOTIFICATION_TYPES = [
-    {
-        "notification_code": "welcome_message",
-        "name": "Welcome Message",
-        "description": "Sent when a user joins the platform"
-    },
-    {
-        "notification_code": "password_reset",
-        "name": "Password Reset",
-        "description": "Sent when user requests password reset"
-    }
-]
-```
 
 ### Email Configuration
 
 For email notifications, configure your email backend in settings:
 
-```python
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-app-password'
-DEFAULT_FROM_EMAIL = 'NotifyHub <noreply@notifyhub.com>'
+# TODO
 ```
 
-## 🧪 Testing
 
-```bash
-# Run all tests
-python manage.py test
-
-# Run specific app tests
-python manage.py test notification
-python manage.py test user
-
-# Run with coverage
-pip install coverage
-coverage run --source='.' manage.py test
-coverage report
-coverage html
-```
-
-## 📁 Project Structure
 
 ```
-NotifyHub/
-├── notification/           # Notification app
-│   ├── models.py          # Notification models
-│   ├── views.py           # API views
-│   ├── serializers.py     # DRF serializers
-│   ├── signals.py         # Django signals
-│   └── urls.py            # URL routing
-├── user/                  # User management app
-│   ├── models.py          # Custom user model
-│   ├── managers.py        # User manager
-│   ├── serializers.py     # User serializers
-│   └── views.py           # User views
-├── utils/                 # Utility modules
-│   ├── base_model.py      # Base model classes
-│   └── email.py           # Email utilities
-├── static/                # Static files
-├── staticfiles/           # Collected static files
-├── NotifyHub/             # Main project settings
-│   ├── settings.py        # Django settings
-│   ├── urls.py            # Main URL configuration
-│   └── wsgi.py            # WSGI application
-├── requirements.txt       # Python dependencies
-├── Dockerfile             # Docker configuration
-├── manage.py              # Django management script
-└── README.md              # This file
-```
+
 
 ## 🚀 Deployment
 
@@ -394,9 +306,7 @@ NotifyHub/
 1. Set `DEBUG=False` in your environment
 2. Configure a production database (PostgreSQL recommended)
 3. Set up proper static file serving
-4. Configure email backend for notifications
-5. Set secure `SECRET_KEY`
-
+4.Setup allowedhost
 ### Using Docker in Production
 
 ```bash
@@ -411,17 +321,6 @@ docker run -d \
   notifyhub:latest
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📧 Support
 

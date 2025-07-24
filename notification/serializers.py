@@ -48,3 +48,4 @@ class NotificationReadSerializer(serializers.Serializer):
         child=serializers.IntegerField(),
         help_text="List of NotificationDelivery IDs to mark as read",
     )
+    
