@@ -35,13 +35,13 @@ urlpatterns = router.urls + [
                     "unread/",
                     NotificationUnReadListView.as_view(),
                     name="notification-unread",
-                ),
-                path(
-                    "trigger/",
-                    NotificationTriggerView.as_view(),
-                    name="notification-trigger",
-                ),
+                )
             ]
         ),
     ),
+    path(
+        "trigger/",
+        NotificationTriggerView.as_view(),
+        name="notification-trigger",
+    ), 
 ]
