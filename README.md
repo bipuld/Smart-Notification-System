@@ -399,13 +399,6 @@ docker run -d \
   notifyhub:latest
 ```
 
-
-## 📧 Support
-
-For support and questions, please contact:
-- Email: support@notifyhub.com
-- GitHub Issues: [Create an issue](https://github.com/yourusername/notifyhub/issues)
-
 ## 🔄 Changelog
 
 ### v1.0.0 (2025-07-24)
