@@ -22,13 +22,12 @@ A Smart Notification System is django based notification management system that 
 - **Authentication**: JWT with SimpleJWT
 - **Documentation**: drf-spectacular (Swagger/OpenAPI)
 - **Rich Text**: CKEditor5
-- **Deployment**: Docker, Gunicorn
+- **Deployment**: Docker, Gunicorn,Render
 - **Styling**: Jazzmin Admin Theme
 
 ## 📋 Prerequisites
 
 - Python 3.12+
-- pip
 - PostgreSQL (for production)
 - Docker (optional)
 
@@ -85,6 +84,12 @@ python manage.py runserver
 
 The application will be available at `http://localhost:8000`
 
+The production link:
+https://smart-notification-system-nxi5.onrender.com/api/swagger/
+For admin :
+https://smart-notification-system-nxi5.onrender.com/admin/
+
+
 ## 🐳 Docker Setup
 
 ### Build and Run with Docker
@@ -100,6 +105,78 @@ docker run -p 8000:8000 -e DEBUG=True notifyhub
 #for the compose run 
 
 Run with: `docker-compose up -d`
+
+
+## 📄 Design Decisions
+
+### 1. Signals for Notification Triggers
+Django signals (`post_save`, etc.) were used to decouple event logic from core functionality. For example, triggering notifications on events like user login or comment creation is handled via thorugh notification preference and its deliver to user, making the codebase more modular, reusable, and easier to maintain.
+
+**Benefit**: Promotes loose coupling between business logic and notification system.
+
+### 2. Initialization for Notification Types
+Notification types (e.g., `new_login`, `weekly_summary`, `new_comment`) are initialized via custom Django data migrations instead of manual admin entry or seed scripts.
+
+**Benefit**: Ensures consistent and repeatable setup across environments (development, staging, production) without requiring manual configuration.
+
+
+### 3. Separated Models for Notification Types, Preferences, and Deliveries
+The system uses distinct models for:
+- `NotificationType`: Defines what kinds of events can trigger notifications.
+- `NotificationPreference`: Stores user-level preferences for each notification type and channel.
+- `NotificationDelivery`: Tracks each actual delivery attempt (status, channel, timestamp).
+
+**Benefit**: Improves scalability, simplifies querying, and cleanly supports multi-channel delivery logic.
+
+
+### 4. Custom User Model
+A custom user model was used to ensure flexibility for future enhancements such as email login, or user profiles.
+
+**Benefit**: Future-proofs the system while aligning with more features.
+
+
+### 5. Mock Email and SMS Channels
+Since the system uses mocked services for these channels . Delivery logs still track them as if they were real.
+
+**Benefit**: Keeps local setup simple while simulating real-world flows.
+
+### 6. Role-Based Access and Permissions
+Sensitive actions like triggering system wide events are protected via permission checks to ensure only admin users can perform them.
+
+**Benefit**: Security and integrity in notification handling.
+
+
+### 7. DRF-Spectacular for API Documentation
+`drf-spectacular` was chosen for its tight integration with Django REST Framework and automatic schema generation. It supports both Swagger and ReDoc UIs.
+
+**Benefit**: Provides clear, interactive API docs for developers and testers.
+
+
+
+### 8. CKEditor5 for Rich Text Notifications
+Rich content notifications (especially for email) benefit from formatted text. CKEditor5 was integrated for creating and managing content-rich messages in admin.
+
+**Benefit**: Allows admin to create visually appealing notifications with formatting and media.
+
+
+### 9. Jazzmin for Admin Customization
+The default Django admin is enhanced using the **Jazzmin** theme to provide a modern, clean, and user friendly interface. This makes managing users, notification types, preferences, and delivery logs more intuitive for admin users.
+
+**Benefit**: Improves usability and aesthetics of the admin panel without requiring a custom frontend. Helps non-technical admins navigate and manage the system efficiently.
+
+
+
+
+## 🐛 Debug Logging
+
+The project includes Django's built-in logging configuration, enhanced with custom debug-level logs to help developers monitor and troubleshoot the notification system. Logging is used to:
+
+- Track when and how notification events are triggered
+- Log delivery attempts across channels (in-app, email, SMS)
+- Report failures and reasons during notification dispatch
+- Capture key user actions (e.g., login, comment creation) when tied to events
+
+```
 
 ## 📖 API Documentation
 

@@ -6,13 +6,10 @@ from django.db import migrations
 def create_notification_types(apps, schema_editor):
     """
     Default NotificationType entries required for event handling.
-
     The system-defined notification types that correspond to the supported events:
     - New comment posted
     - New login from unrecognized device
     - Weekly summary report
-
-    This data migration ensures these values exist in every environment after migration.
     """
     NotificationType = apps.get_model("notification", "NotificationType")
 
