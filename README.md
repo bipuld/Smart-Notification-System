@@ -106,6 +106,7 @@ docker run -p 8000:8000 -e DEBUG=True notifyhub
 
 Run with: `docker-compose up -d`
 
+```
 
 ## 📄 Design Decisions
 
@@ -164,7 +165,7 @@ The default Django admin is enhanced using the **Jazzmin** theme to provide a mo
 
 **Benefit**: Improves usability and aesthetics of the admin panel without requiring a custom frontend. Helps non-technical admins navigate and manage the system efficiently.
 
-
+```
 
 
 ## 🐛 Debug Logging
