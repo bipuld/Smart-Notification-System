@@ -190,8 +190,10 @@ class NotificationTriggerView(APIView):
             )
 
         delivery.save()
-#For Now NotificationTypeList is used to list all the notification types available in the system.
-#TODO:In Future, we can create a NotificationType API to create new notification types.
+
+        # For Now NotificationTypeList is used to list all the notification types available in the system.
+        # TODO:In Future, we can create a NotificationType API to create new notification types.
+
 @extend_schema(tags=["Notifications View"])
 class NotificationTypeList(ListAPIView):
     """This view lists all notification types"""
@@ -199,6 +201,8 @@ class NotificationTypeList(ListAPIView):
     serializer_class = NotificationTypeList
     queryset = NotificationType.objects.all()
     permission_classes = [IsAuthenticated]
+
+
 
 @extend_schema(tags=["Notifications View"])
 class NotificationHistoryView(ListAPIView):
@@ -211,6 +215,8 @@ class NotificationHistoryView(ListAPIView):
 
 
 
+
+
 @extend_schema(tags=["Notifications View"])
 class NotificationUnReadListView(ListAPIView):
     permission_classes = [IsAuthenticated]
@@ -218,10 +224,10 @@ class NotificationUnReadListView(ListAPIView):
     queryset = NotificationDelivery.objects.all()
 
     def get_queryset(self):
-        print(self.request.user)
         return self.queryset.filter(
             user=self.request.user, is_read=False, channel="in_app"
         )
+
 @extend_schema(tags=["Notifications View"])
 class NotificationReadView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]

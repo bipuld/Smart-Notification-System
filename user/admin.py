@@ -11,7 +11,7 @@ from user.models import User
 class UserAdmin(BaseUserAdmin):
     ordering = ("-created_at",)
     list_display = (
-        "id",
+        
         "email",
         "username",
         "full_name",

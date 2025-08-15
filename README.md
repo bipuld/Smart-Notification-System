@@ -290,6 +290,7 @@ curl -X POST http://localhost:8000/api/v1/notification/notification/trigger/ \
 This event simulate new_comment notification type  and this simulates the notification delivery to alll user of with type who are as mention in perfernces variety of channels and this new_comments type delivery status and only simulate by admin as they are authorize to perform this action
 
 ```bash
+
 curl -X POST http://localhost:8000/api/v1/notification/notification/trigger/ \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
@@ -302,6 +303,8 @@ curl -X POST http://localhost:8000/api/v1/notification/notification/trigger/ \
     "new_logins": 2,
     "summary": "You have 5 new comments and 2 logins this week."
   }
+
+
 ```
 This event simulate weekly summary notification type  and this simulates the notification delivery to alll user of with type as mention in perfernces delivery status as weekly_summary with diffrent channels and only simulate by admin as they are authorize to perform this action
 

@@ -27,14 +27,14 @@ urlpatterns = router.urls + [
         name="notification-delivery",
     ),
     path(
-        "trigger/",
-        NotificationTriggerView.as_view(),
-        name="notification-trigger",
-    ),
-    path(
         "history/",
         NotificationHistoryView.as_view(),
         name="notification-history",
+    ),
+    path(
+        "trigger/",
+        NotificationTriggerView.as_view(),
+        name="notification-trigger",
     ),
     path("read/", NotificationReadView.as_view(), name="notification-read"),
     path(

@@ -30,7 +30,7 @@ services:
       POSTGRES_USER: ${DB_USER}     # DB username (from .env)
       POSTGRES_PASSWORD: ${DB_PASSWORD}  # DB password (from .env)
     ports:
-      - "5432:5432"  # Expose Postgres default port for local tools if needed
+      - "5433:5432"  # Expose Postgres default port for local tools if needed
 
 volumes:
   postgres_data:  # Persistent volume for DB data

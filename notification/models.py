@@ -17,14 +17,12 @@ class NotificationType(TimeStampedModel):
     """
     Defines the type of event that can trigger a notification, e.g., new_comment, new_login.
     """
-
     notification_code = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=255)
     description = CKEditor5Field(config_name="extends", blank=True)
     is_active = models.BooleanField(
         default=True, help_text="Controls if this type is currently in use."
     )
-
     def __str__(self):
         return self.name
 
@@ -38,7 +36,7 @@ class NotificationPreference(TimeStampedModel):
     """
     Tracks which user wants to receive which notification type through which channel.
     """
-
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     notification_type = models.ForeignKey(
         NotificationType, on_delete=models.CASCADE, related_name="preferences"
