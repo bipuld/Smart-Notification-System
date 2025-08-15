@@ -15,6 +15,7 @@ class UserAdmin(BaseUserAdmin):
         "email",
         "username",
         "full_name",
+        "location"
         "is_active",
         "is_verified",
         "is_staff",
@@ -31,7 +32,7 @@ class UserAdmin(BaseUserAdmin):
         (_("Basic Info"), {"fields": ("email", "username", "password")}),
         (
             _("Personal Details"),
-            {"fields": ("first_name", "middle_name", "last_name", "phone")},
+            {"fields": ("first_name", "middle_name", "last_name", "phone", "location")},
         ),
         (
             _("Verification Flags"),
