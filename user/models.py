@@ -31,6 +31,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     last_name = models.CharField(_("last name"), max_length=64, null=True, blank=True)
     is_active = models.BooleanField(default=False, verbose_name="Active Status")
+    location= models.CharField(
+        _("location"),
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text=_("The location of the user, e.g., city or country."),
+    )
     is_email_verified = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False, verbose_name="Verified Status")
     created_at = models.DateTimeField(auto_now_add=True)
